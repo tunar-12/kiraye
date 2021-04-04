@@ -144,5 +144,6 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
+      <Button fx:id="borrowBtn" layoutX="963.0" layoutY="30.0" mnemonicParsing="false" onAction="#borrowBtnOnAction" prefHeight="67.0" prefWidth="105.0" styleClass="loginBack" stylesheets="@../css/backPhotos.css" />
    </children>
 </AnchorPane>

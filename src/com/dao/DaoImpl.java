@@ -36,7 +36,7 @@ String name;
                     task1.setDay(rs.getString("day"));
                     task1.setMonth(rs.getString("month"));
                     task1.setYear(rs.getString("year"));
-                        task1.setMoney(rs.getString("money"));
+                        task1.setMoney(rs.getString("money") + " AZN");
                         task1.setUser(rs.getString("user"));
                             task1.setStatus(rs.getString("status"));
                     allBooks.add(task1);

@@ -1,5 +1,10 @@
 .loginBack{
-     -fx-background-image: url(/com/images/micah-williams-lmFJOx7hPc4-unsplash.jpg);
+     -fx-background-image: url(/com/images/borrow.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100%;
+}
+.listBack{
+    -fx-background-image: url(/com/images/ash-_-ismail-OLRWjFIRvxY-unsplash.jpg);
     -fx-background-repeat: no-repeat;
     -fx-background-size: 100%;
 }

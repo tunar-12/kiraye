@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -16,13 +19,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 public class PageController implements Initializable {
 
     int selectedId = 0;
-   
+
     String selectedUser = "";
     DaoImpl dao = new DaoImpl();
     ArrayList<String> usersArr = new ArrayList<String>();
@@ -74,18 +80,19 @@ public class PageController implements Initializable {
     private TableColumn<?, ?> userRow;
     @FXML
     private Button deleteBtn;
+    @FXML
+    private Button borrowBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tableView.setVisible(false);
         loadMonth();
-       
-        for (int i=0;i<dao.getAllUsers().size();i++){
-        usersArr.add(dao.getAllUsers().get(i));     
+        for (int i = 0; i < dao.getAllUsers().size(); i++) {
+            usersArr.add(dao.getAllUsers().get(i));
         }
-       loadUser();
-       loadColumnUsers();
-       loadRowsUsers();
+        loadUser();
+        loadColumnUsers();
+        loadRowsUsers();
     }
 
     private void loadMonth() {
@@ -105,18 +112,18 @@ public class PageController implements Initializable {
     public void refresh() {
         tableView.getItems().clear();
         tableView.getItems().addAll(dao.getAllPayments(selectedUser));
-           int x = dao.countMonthes(selectedUser);
+        int x = dao.countMonthes(selectedUser);
         String th = x + "";
-    monthLbl.setText(th+" ay,");
-    int y = dao.countMoney(selectedUser);
-    String h = y + "";
-    moneyLbl.setText(h + " manat");
+        monthLbl.setText(th + " ay,");
+        int y = dao.countMoney(selectedUser);
+        String h = y + "";
+        moneyLbl.setText(h + " manat");
     }
 
     private void loadUser() {
-    for (int i=0;i<usersArr.size();i++){
-        userCb.getItems().add(usersArr.get(i));
-    }
+        for (int i = 0; i < usersArr.size(); i++) {
+            userCb.getItems().add(usersArr.get(i));
+        }
     }
 
     @FXML
@@ -127,7 +134,7 @@ public class PageController implements Initializable {
         } else {
             if (dao.addUser(newUser)) {
                 warningLbl.setText("Yeni Usta ugurla elave olundu!!");
-              
+
             } else {
                 warningLbl.setText("Elave oluna bilmedi!!");
             }
@@ -148,15 +155,15 @@ public class PageController implements Initializable {
 
     @FXML
     private void filterUsersOnAction(ActionEvent event) {
-    tableView.setVisible(true);
-    loadColumn();
+        tableView.setVisible(true);
+        loadColumn();
         loadRows();
         int x = dao.countMonthes(selectedUser);
         String th = x + "";
-    monthLbl.setText(th+" ay,");
-     int y = dao.countMoney(selectedUser);
-    String h = y + "";
-    moneyLbl.setText(h + " manat");
+        monthLbl.setText(th + " ay,");
+        int y = dao.countMoney(selectedUser);
+        String h = y + "";
+        moneyLbl.setText(h + " manat");
     }
 
     @FXML
@@ -173,19 +180,17 @@ public class PageController implements Initializable {
 
     @FXML
     private void addBtnNewOnAction(ActionEvent event) {
-     warningLbl.setText("");
-        if (dayTf.getText().equalsIgnoreCase("") || yearTf.getText().equalsIgnoreCase("")||moneyTf.getText().equalsIgnoreCase("")) {
+        warningLbl.setText("");
+        if (dayTf.getText().equalsIgnoreCase("") || yearTf.getText().equalsIgnoreCase("") || moneyTf.getText().equalsIgnoreCase("")) {
             warningLbl.setText("Butun xanalari doldurun!");
         } else {
             try {
                 Payments newBook = new Payments();
-                
                 newBook.setDay(dayTf.getText());
                 newBook.setMonth(monthCb.getSelectionModel().getSelectedItem());
-                 newBook.setYear(yearTf.getText());
-               newBook.setMoney(moneyTf.getText());
-             newBook.setUser(userCb.getSelectionModel().getSelectedItem());
-                
+                newBook.setYear(yearTf.getText());
+                newBook.setMoney(moneyTf.getText());
+                newBook.setUser(userCb.getSelectionModel().getSelectedItem());
                 if (dao.addPayment(newBook)) {
                     warningLbl.setText("Yeni borc elave olundu!");
                     refresh();
@@ -197,37 +202,54 @@ public class PageController implements Initializable {
             }
         }
     }
-    
+
     private void loadColumnUsers() {
         userRow.setCellValueFactory(new PropertyValueFactory<>("user"));
     }
-   private void loadRowsUsers() {
+
+    private void loadRowsUsers() {
         tableView2.getItems().addAll(dao.getAllUsers1());
     }
-      private void loadColumn() {
+
+    private void loadColumn() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-          day.setCellValueFactory(new PropertyValueFactory<>("day"));
-             month.setCellValueFactory(new PropertyValueFactory<>("month"));
-                year.setCellValueFactory(new PropertyValueFactory<>("year"));
-                   money.setCellValueFactory(new PropertyValueFactory<>("money"));
-                      user.setCellValueFactory(new PropertyValueFactory<>("user"));
-                         status.setCellValueFactory(new PropertyValueFactory<>("status"));
-                         
-        
+        day.setCellValueFactory(new PropertyValueFactory<>("day"));
+        month.setCellValueFactory(new PropertyValueFactory<>("month"));
+        year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        money.setCellValueFactory(new PropertyValueFactory<>("money"));
+        user.setCellValueFactory(new PropertyValueFactory<>("user"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
-      private void loadRows() {
+
+    private void loadRows() {
         tableView.getItems().addAll(dao.getAllPayments(selectedUser));
-          
     }
 
     @FXML
     private void deleteBtnOnAction(ActionEvent event) {
-    
-     if (dao.deleteBook(selectedId)) {
+        if (dao.deleteBook(selectedId)) {
             refresh();
             warningLbl.setText("Silindi!");
         } else {
             warningLbl.setText("Siline bilmedi!");
+        }
+    }
+
+    @FXML
+    private void borrowBtnOnAction(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("List");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/borrow/borrow.fxml"));
+            stage.getIcons().add(new Image("com/images/borrow.png"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

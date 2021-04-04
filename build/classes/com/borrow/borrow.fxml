@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="405.0" prefWidth="498.0" styleClass="listBack" stylesheets="@../css/backPhotos.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.borrow.BorrowController">
+   <children>
+      <Label alignment="CENTER" layoutX="154.0" layoutY="7.0" prefHeight="54.0" prefWidth="190.0" text="Borclar" textFill="#4da6ff">
+         <font>
+            <Font name="System Bold" size="39.0" />
+         </font>
+      </Label>
+      <TableView fx:id="table" layoutY="70.0" onMousePressed="#tableOnMousePressed" prefHeight="418.0" prefWidth="333.0">
+        <columns>
+          <TableColumn fx:id="user" prefWidth="332.0" text="Usta" />
+        </columns>
+      </TableView>
+      <Label fx:id="month" alignment="CENTER" layoutX="333.0" layoutY="146.0" prefHeight="109.0" prefWidth="165.0" text="5 ay" textFill="#5cd65c">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="money" alignment="CENTER" layoutX="333.0" layoutY="271.0" prefHeight="122.0" prefWidth="165.0" text="3000 manat" textFill="#5cd65c">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
