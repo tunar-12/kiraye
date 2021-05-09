@@ -75,8 +75,6 @@ public class PageController implements Initializable {
     @FXML
     private TableView<Users> tableView2;
     @FXML
-    private Button filterUsers;
-    @FXML
     private TableColumn<?, ?> userRow;
     @FXML
     private Button deleteBtn;
@@ -153,23 +151,21 @@ public class PageController implements Initializable {
 
     }
 
+
     @FXML
-    private void filterUsersOnAction(ActionEvent event) {
+    private void tableView2OnMousePressed(MouseEvent event) {
+        Users book = tableView2.getSelectionModel().getSelectedItem();
+        selectedUser = book.getUser();
         tableView.setVisible(true);
         loadColumn();
         loadRows();
+        refresh();
         int x = dao.countMonthes(selectedUser);
         String th = x + "";
         monthLbl.setText(th + " ay,");
         int y = dao.countMoney(selectedUser);
         String h = y + "";
         moneyLbl.setText(h + " manat");
-    }
-
-    @FXML
-    private void tableView2OnMousePressed(MouseEvent event) {
-        Users book = tableView2.getSelectionModel().getSelectedItem();
-        selectedUser = book.getUser();
     }
 
     @FXML
